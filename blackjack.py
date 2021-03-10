@@ -100,9 +100,9 @@ def player_turn_fun(allcards,player_hand,dealer_hand):
 
         p_hand_value = hand_total(player_hand)
 #       print ('\n'*100)
-        print(p_hand_value)
+#        print(p_hand_value)
         d_hand_value = hand_total(dealer_hand)
-        print(d_hand_value)
+#        print(d_hand_value)
 
         print('Dealer Hand:')
         deck.c_spool(dealer_hand,False)
