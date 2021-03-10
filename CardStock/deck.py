@@ -36,7 +36,7 @@ def c_spool(current_cards,visible):
     '''
     Prints cards in a recognizeable format to stdout.
     '''
-    cards_in_row = 10
+    cards_in_row = 5
 
     card_box_end = '+------------+'
     card_box_fill = '|            |'

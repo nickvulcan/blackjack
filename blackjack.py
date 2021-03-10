@@ -25,9 +25,14 @@ You have a balance of: {}'.format(self.balance))
         '''
         This handles it when the user manages to win.
         '''
+        print()
         print('Your winnings have been deposited to your account.')
         self.balance += wager * 2
     def wager_tie(self,wager):
+        '''
+        This handles wagers when there is a tie.
+        '''
+        print()
         print('Your wager has been returned to your account.')
         self.balance += wager
 
@@ -35,18 +40,7 @@ def hand_total(hand):
     '''
     This function determines how aces function.
     '''
-    #Calculate value of hand without aces first, then count number of aces in the hand.
-    #Try making all = 11, then if fails change one at a time until and unless player still busts.
-    #Create function for ace_math.
-    # Start doing a minimum, for loop of all aces with a value
-    # of 1 and check to ensure value is less than 22
-    # If the value is less than 22, try changing one
-    # at a time to 11 until it exceeds the value, then back off by one.
-    # Accomplish this by changing the value in the list, then
-    # adding the final calculated value at the end.
-    #
-    #
-    # New account, $100 to start.
+
     aces_in_hand = 0
     hand_value = 0
 
@@ -124,7 +118,6 @@ def player_turn_fun(allcards,player_hand,dealer_hand):
         if hit_me.lower() == 'h' or hit_me.lower() == 'hit':
             player_hand.append(allcards.pop())
         elif hit_me.lower() == 's' or hit_me.lower() == 'stay':
-            #player_turn = False
             break
 
     return (allcards,player_hand,p_hand_value)
@@ -160,7 +153,7 @@ def dealer_turn_fun(allcards,player_hand,dealer_hand):
             hit_me = 'stay'
         elif d_hand_value == p_hand_value and d_hand_value < 21:
             hit_me = 'hit'
-        
+
         if hit_me.lower() == 'h' or hit_me.lower() == 'hit':
             dealer_hand.append(allcards.pop())
         elif hit_me.lower() == 's' or hit_me.lower() == 'stay':
@@ -191,9 +184,9 @@ def primary_function():
         player_account.wager(requested_wager)
         games_tally = games_lost
         games_lost,tie = begin_game(games_lost)
-        if tie == True:
+        if tie is True:
             player_account.wager_tie(requested_wager)
-        elif tie == False and games_tally == games_lost:
+        elif tie is False and games_tally == games_lost:
             player_account.wager_win(requested_wager)
         print()
     #    print('\n' * 100)
@@ -212,7 +205,6 @@ def begin_game(_games_lost):
     allcards = populate_deck()
     print('Game initializing.')
     # Everyday I'm shuffling.
-    #random.shuffle(allcards)
     random.shuffle(allcards)
 
     print('The deck has been unpacked and shuffled.')
@@ -236,9 +228,9 @@ def begin_game(_games_lost):
         _games_lost += 1
     elif d_hand_value > 21:
         print('You win.  Somehow.')
-    elif p_hand_value < 22 and d_hand_value < 22 and p_hand_value > d_hand_value:
+    elif d_hand_value < p_hand_value < 22 and d_hand_value < 22:
         print('You win.  Somehow.')
-    elif p_hand_value < 22 and d_hand_value < 22 and p_hand_value < d_hand_value:
+    elif 22 > d_hand_value > p_hand_value < 22 and d_hand_value:
         print('You lose.')
         _games_lost += 1
     elif p_hand_value < 22 and d_hand_value < 22 and p_hand_value == d_hand_value:
