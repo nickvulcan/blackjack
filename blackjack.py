@@ -12,11 +12,12 @@ class BankRoll():
     def __init__(self):
         self.balance = 100
         print('A complimentary account has been created with the casino.  \
-You have a balance of: {}'.format(self.balance))
+You have a balance of: ${}'.format(self.balance))
     def wager(self,wager):
         '''
         This manages the wager set by the user.
         '''
+
         if wager > self.balance:
             print('You have overdrafted your account.  Your bank charges you $30.')
             self.balance -= 30
@@ -52,7 +53,7 @@ def hand_total(hand):
 
     hand_value += aces_in_hand
     for _ in range(0,aces_in_hand):
-        if hand_value < 51:
+        if hand_value < 12:
             hand_value += 10
         else:
             pass
@@ -172,6 +173,7 @@ def primary_function():
     game_number = 0
     games_lost = 0
     while True:
+        requested_wager = True
         begin_var = input('Would you like to play BlackJack?  (Y/n):  ')
         if begin_var.lower() != "y" and begin_var.lower() != "yes":
             if game_number < 1:
@@ -179,8 +181,22 @@ def primary_function():
                 continue
             print('Maybe you will be luckier next time...  But probably not.')
             break
-        print('Your current balance is:  {}'.format(player_account.balance))
-        requested_wager = int(input('How much would you like to wager?  '))
+        print('Your current balance is:  ${}'.format(player_account.balance))
+
+        try:
+            requested_wager = int(input('How much would you like to wager? \
+(positive integer)  $'))
+            requested_wager = False
+        except ValueError:
+            print('"What is an integer," you ask yourself as you hammer \
+mindlessly on your keyboard.  You have accidentally bet your \
+entire account balance.')
+            requested_wager = player_account.balance
+
+        if requested_wager > 500:
+            print('Maximum wager exceeded.  Scaling back to $500.')
+            requested_wager = 500        
+
         player_account.wager(requested_wager)
         games_tally = games_lost
         games_lost,tie = begin_game(games_lost)
